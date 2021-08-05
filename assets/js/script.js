@@ -7,8 +7,9 @@ function handleSuccessfulData(data){
     $('#today').empty();
     var list = data.list[0];
     set_item(list['name']);
-    var iconurl = "http://openweathermap.org/img/w/" + list['weather'][0]['icon']+ ".png";
-    var weather_image = $('<img id="weather-icon">').attr('src', iconurl);
+    console.log()
+    var iconurl = "https://openweathermap.org/img/wn/"+ list['weather'][0]['icon']+ ".png";
+    var weather_image = $('<img id="weather-icon" src='+iconurl+'>');
     var today = moment().format("M/D/YYYY");
     var mainContent = $("<div class='card'></div>");
     var contentBdy = $("<div class='card-body'></div>");
@@ -38,18 +39,18 @@ function UVfider(coord){
       .then(function (data) {   
         console.log(data['current']['uvi']);
         uvData = data['current']['uvi'];
-        todayUV= $("<p class='card-text'>UV index: <span class='UVnum'>"+uvData+"</span></p>");
-        uvNum = $('.UVnum');
-        if(uvData > 2 && uvData < 6){
+        todayUV= $("<p class='card-text'>UV index: <span class='UVI'>"+uvData+"</span></p>");
+        uvNum = $('.UVI');
+        if(uvData > 2){
             uvNum.attr('id', 'yellow');
             
-        }else if(uvData > 5 && uvData < 8){
+        }else if(uvData > 5){
             uvNum.attr('id', 'orange');
  
-        }else if(uvData > 7 && uvData < 11){
+        }else if(uvData > 7){
             uvNum.attr('id', 'red');
 
-        }else if(uvData > 11){
+        }else if(uvData >= 11){
             uvNum.attr('id', 'purple'); 
 
         }else{
@@ -80,27 +81,21 @@ function fiveDay(coords){
         var weather_list = data['daily'];
         for(var i = 1; i < weather_list.length - 2; i++){
             var card_container = $('<div class="col-md five-day-card"></div>');
-            var card_content = $('<div class="card bg-primary h-100 text-white"></div>');
+            var card_content = $('<div class="card h-150 text-white" id="forecast-card"></div>');
             card_container.append(card_content);
             var card_title = $("<h5>"+moment().add(i, 'days').format("M/D/YYYY")+"</h5>");
             var card_icon = $("<img>");
             var card_temp = $("<p>Temp: "+weather_list[i]['temp']['day']+"°F</p>");
-            var card_wind = $("<p>Wind: "+weather_list[i]['wind_speed']+"mph</p>");
+            var card_wind = $("<p>Wind: "+weather_list[i]['wind_speed']+" mph</p>");
             var card_humid = $("<p>Humidity: "+weather_list[0]['humidity']+"%</p>");
             card_content.append(card_title).append(card_temp).append(card_wind).append(card_humid);
-            forecast.append(card_content)
+            forecast.append(card_container);
         }
      });  
 }
 
-function search_city(evnt){
-    evnt.preventDefault();
-    var letters = /[a-zA-Z]/g;
-    var city = $("#state-input").val();
-    if(!(letters.test(city))){
-        alert('Please enter a location!');
-        return;
-    }
+function search_city(city){
+
     
     // city = city.replace(/\s/g, '');
     console.log(city);
@@ -125,12 +120,19 @@ function search_city(evnt){
      });  
 }
 
+function handleBtn(evnt){
+    var location = evnt.target;
+    console.log(location);
+    // search_city(locations)
+}
+
 function storage(){
     var city_items = JSON.parse(localStorage.getItem('city'));
     if(city_items != undefined){
         for(i = 0; i < city_items.length; i++){
             var newBtn = $('<button class="btn btn-success">'+city_items[i]+'</button>');
             $('#history').append(newBtn)
+            newBtn.onClick = handleBtn;
         }
     }
 }
@@ -154,7 +156,16 @@ function set_item(city){
 }
 
 function setEventlisteners(){
-    $('#searchBtn').on('click', search_city);
+    $('#searchBtn').on('click', function(evnt){
+        evnt.preventDefault();
+    var letters = /[a-zA-Z]/g;
+    var city = $("#state-input").val();
+    if(!(letters.test(city))){
+        alert('Please enter a location!');
+        return;
+    }
+    search_city(city);
+    });
 }
 
 function init(){
