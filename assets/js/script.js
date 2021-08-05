@@ -17,7 +17,8 @@ function handleSuccessfulData(data){
     var todayWind = $("<p class='card-text'>Wind: "+list['wind']['speed']+" mph</p>");
     var todayHumidity = $("<p class='card-text'>Humidity: "+list['main']['humidity']+"%</p>");
     mainContent.append(contentBdy);
-    var contentTitle = $("<h2 class='h3 card-title'>"+list['name']+" ("+today+") "+weather_image+"</h2>");
+    var contentTitle = $("<h2 class='h3 card-title'>"+list['name']+" ("+today+") </h2>");
+    contentTitle.append(weather_image)
     contentBdy.append(contentTitle).append(todayTemp).append(todayWind).append(todayHumidity);;
     $('#today').append(mainContent);
 }
@@ -39,8 +40,9 @@ function UVfider(coord){
       .then(function (data) {   
         console.log(data['current']['uvi']);
         uvData = data['current']['uvi'];
-        todayUV= $("<p class='card-text'>UV index: <span class='UVI'>"+uvData+"</span></p>");
-        uvNum = $('.UVI');
+        todayUV= $("<p class='card-text'>UV index: </p>");
+        uvNum = $("<span class='UVI'>"+uvData+"</span>");
+        todayUV.append(uvNum)
         if(uvData > 2){
             uvNum.attr('id', 'yellow');
             
@@ -80,15 +82,17 @@ function fiveDay(coords){
         console.log(data)
         var weather_list = data['daily'];
         for(var i = 1; i < weather_list.length - 2; i++){
+            var icon = weather_list[i]['weather']
+            var iconurl = "https://openweathermap.org/img/wn/"+ icon[0]['icon']+ ".png";
+            var weather_image = $('<p><img id="weather-icon" src='+iconurl+'></p>');
             var card_container = $('<div class="col-md five-day-card"></div>');
             var card_content = $('<div class="card h-150 text-white" id="forecast-card"></div>');
             card_container.append(card_content);
-            var card_title = $("<h5>"+moment().add(i, 'days').format("M/D/YYYY")+"</h5>");
-            var card_icon = $("<img>");
+            var card_title = $("<h4>"+moment().add(i, 'days').format("M/D/YYYY")+"</h4>");
             var card_temp = $("<p>Temp: "+weather_list[i]['temp']['day']+"°F</p>");
             var card_wind = $("<p>Wind: "+weather_list[i]['wind_speed']+" mph</p>");
             var card_humid = $("<p>Humidity: "+weather_list[0]['humidity']+"%</p>");
-            card_content.append(card_title).append(card_temp).append(card_wind).append(card_humid);
+            card_content.append(card_title).append(weather_image).append(card_temp).append(card_wind).append(card_humid);
             forecast.append(card_container);
         }
      });  
@@ -96,8 +100,6 @@ function fiveDay(coords){
 
 function search_city(city){
 
-    
-    // city = city.replace(/\s/g, '');
     console.log(city);
     var searchURL = 'https://api.openweathermap.org/data/2.5/find?q='+city+'&units=imperial&appid='+API_key;
     fetch(searchURL)
@@ -121,9 +123,9 @@ function search_city(city){
 }
 
 function handleBtn(evnt){
-    var location = evnt.target;
-    console.log(location);
-    // search_city(locations)
+    evnt.preventDefault();
+    var location = evnt.target.value;
+    search_city(location);
 }
 
 function storage(){
@@ -132,7 +134,8 @@ function storage(){
         for(i = 0; i < city_items.length; i++){
             var newBtn = $('<button class="btn btn-success">'+city_items[i]+'</button>');
             $('#history').append(newBtn)
-            newBtn.onClick = handleBtn;
+            newBtn.attr('value', city_items[i]);
+            newBtn.on('click', handleBtn);
         }
     }
 }
@@ -153,6 +156,10 @@ function set_item(city){
         
         localStorage.setItem('city', JSON.stringify(city_Arr));
     }
+    var newBtn = $('<button class="btn btn-success">'+city+'</button>');
+            $('#history').append(newBtn)
+            newBtn.attr('value', city);
+            newBtn.on('click', handleBtn);
 }
 
 function setEventlisteners(){
@@ -166,6 +173,10 @@ function setEventlisteners(){
     }
     search_city(city);
     });
+    $('#clearBtn').on('click', function(){
+        localStorage.clear();
+        $('#history').clear();
+    });
 }
 
 function init(){
@@ -173,6 +184,4 @@ function init(){
     setEventlisteners();
 }
 
-var test = moment().add(1, 'days').format("M/D/YYYY");
-console.log(test);
 init();

@@ -18,23 +18,28 @@ nav h1 {
   box-shadow: 5px 5px 5px #19547b59;
 }
 
+.UVI {
+  padding: 5px;
+  border-radius: 10px;
+}
+
 #green {
   background-color: rgb(3, 185, 3);
   color: white;
 }
 
 #yellow {
-  background-color: rgb(255, 238, 0);
+  background-color: rgb(231, 216, 0);
   color: white;
 }
 
 #orange {
-  background-color: orange;
+  background-color: rgb(219, 143, 0);
   color: white;
 }
 
 #red {
-  background-color: rgb(255, 0, 0);
+  background-color: rgb(190, 0, 0);
   color: white;
 }
 
@@ -47,18 +52,11 @@ nav h1 {
   background-color: #19547b;
 }
 
-/* .card-body {
-  margin-left: 5px;
-} */
-/* .weather-info {
-  margin-right: 15px;
-} */
-
-/* .jumbotron {
-  margin-top: 15px;
-  border: 1px solid black;
-  width: 100%;
-} */
+#forecast-card:hover {
+  -moz-box-shadow: 3px 3px 5px 6px #ccc;
+  -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+  box-shadow: 3px 3px 5px 6px #ccc;
+}
 
 #history {
   margin-top: 30px;
