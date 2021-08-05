@@ -1,0 +1,70 @@
+nav {
+  background-image: linear-gradient(to bottom right, #ffd89b, #19547b);
+}
+
+nav h1 {
+  color: rgb(75, 75, 75);
+  font-size: 35px;
+}
+
+#search_container {
+  width: 200%;
+}
+
+#search_container button {
+  width: 100%;
+  margin-bottom: 5px;
+  background-color: #19547b;
+  box-shadow: 5px 5px 5px #19547b59;
+}
+
+#green {
+  background-color: rgb(3, 185, 3);
+  color: white;
+}
+
+#yellow {
+  background-color: rgb(255, 238, 0);
+  color: white;
+}
+
+#orange {
+  background-color: orange;
+  color: white;
+}
+
+#red {
+  background-color: rgb(255, 0, 0);
+  color: white;
+}
+
+#purple {
+  background-color: rgb(131, 46, 75);
+  color: rgb(146, 129, 129);
+}
+
+#forecast-card {
+  background-color: #19547b59;
+}
+/* .card-body {
+  margin-left: 5px;
+} */
+/* .weather-info {
+  margin-right: 15px;
+} */
+
+/* .jumbotron {
+  margin-top: 15px;
+  border: 1px solid black;
+  width: 100%;
+} */
+
+#history {
+  margin-top: 30px;
+}
+
+#history button {
+  background-color: #ffd89b;
+  color: black;
+  margin-top: 5px;
+}
