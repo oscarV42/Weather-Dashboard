@@ -252,7 +252,7 @@ function set_item(city){
     // giving button value of relative location
     newBtn.attr('value', city);
     // event listener
-    ewBtn.on('click', handleBtn);
+    newBtn.on('click', handleBtn);
 }
 
 // event listener function
