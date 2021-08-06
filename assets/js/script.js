@@ -43,13 +43,13 @@ function UVfider(coord){
         todayUV= $("<p class='card-text'>UV index: </p>");
         uvNum = $("<span class='UVI'>"+uvData+"</span>");
         todayUV.append(uvNum)
-        if(uvData > 2){
+        if(uvData > 2 && uvdata <= 5){
             uvNum.attr('id', 'yellow');
             
-        }else if(uvData > 5){
+        }else if(uvData > 5 && uvdata <= 7){
             uvNum.attr('id', 'orange');
  
-        }else if(uvData > 7){
+        }else if(uvData > 7 && uvdata <= 10){
             uvNum.attr('id', 'red');
 
         }else if(uvData >= 11){
