@@ -77,7 +77,7 @@ function UVfider(coord){
             // setting id to red
             uvNum.attr('id', 'red');
             //if UVI is greater than equal to 11
-        }else if(uvData >= 11){
+        }else if(uvData > 10){
             // setting id to purple
             uvNum.attr('id', 'purple'); 
             // else
