@@ -65,15 +65,15 @@ function UVfider(coord){
         // adding a span indicator to our UVI number
         uvNum = $("<span class='UVI'>"+uvData+"</span>");
         // if UVI data is between 3-5
-        if(uvData > 2 && uvdata <= 5){
+        if(uvData > 2 && uvData <= 5){
             // setting id to yellow
             uvNum.attr('id', 'yellow');
             // if UVI is 6-7
-        }else if(uvData > 5 && uvdata <= 7){
+        }else if(uvData > 5 && uvData <= 7){
             // setting id to orange
             uvNum.attr('id', 'orange');
             //if UVI is 8-10
-        }else if(uvData > 7 && uvdata <= 10){
+        }else if(uvData > 7 && uvData <= 10){
             // setting id to red
             uvNum.attr('id', 'red');
             //if UVI is greater than equal to 11
